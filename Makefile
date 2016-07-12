@@ -1,13 +1,6 @@
-ifeq ($(VERSION),)
-$(error Specify VERSION)
-endif
-
 .PHONY: all
+
 all:
-	# Adjust version numbers in Dockerfile
-	sed -r \
-		-e "/^RUN apt-get -y update/s/firefox=[^*]*\*/firefox=$(VERSION)*/" \
-		-i Dockerfile
 	# Update Ubuntu base image
 	docker pull $(shell grep ^FROM Dockerfile | cut -d' ' -f2)
 	# Build new version
